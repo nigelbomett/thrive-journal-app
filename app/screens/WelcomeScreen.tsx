@@ -1,10 +1,9 @@
-import { Pressable, StyleSheet, TouchableOpacity, View, ImageBackground } from 'react-native'
+import { StyleSheet,View, ImageBackground } from 'react-native'
 import React from 'react'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
 import { RouteProp } from '@react-navigation/native';
-import {CardBackground,Card, Button, YStack, Text ,H2,Paragraph,XStack, SizableText} from 'tamagui'
-import type { CardProps } from 'tamagui'
+import {Button, YStack,SizableText} from 'tamagui'
 
 
 type WelcomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Welcome'>;
@@ -24,6 +23,7 @@ const WelcomeScreen: React.FC<Props> = ({navigation}) =>{
             onPress={() => navigation.navigate('Register')}
             style={styles.registerButton}
             size="$5"
+            backgroundColor={'orange'}
           >
             <SizableText fontWeight="800" size="$5">Get Started</SizableText>
           </Button>
@@ -52,14 +52,6 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-end',
       
     },
-  text: {
-    color: 'white',
-    fontSize: 42,
-    lineHeight: 84,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    backgroundColor: '#000000c0',
-  },
     buttonsContainer: {
       flexDirection: 'column',
       justifyContent:'space-between',
@@ -68,16 +60,10 @@ const styles = StyleSheet.create({
       padding:20
     },
     registerButton: {
-      backgroundColor: '#90461F',
       marginBottom:10
     },
     loginButton: {
       backgroundColor: '#E2D8CC',
       marginBottom: 10
-  },
-    buttonText: {
-      color: '#000000',
-      fontSize:17,
-      fontWeight:'bold',
-    }
+  }
 })
