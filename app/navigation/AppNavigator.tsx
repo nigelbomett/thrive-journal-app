@@ -26,7 +26,7 @@ const AuthNavigator: React.FC = () => (
     <NavigationContainer>
         <Stack.Navigator initialRouteName="Welcome">
             <Stack.Screen name="Welcome" component={WelcomeScreen as React.FC} options={{headerShown:false}}/>
-            <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen as React.FC} />
             <Stack.Screen name="Login" component={LoginScreen}/>
             
         </Stack.Navigator>
