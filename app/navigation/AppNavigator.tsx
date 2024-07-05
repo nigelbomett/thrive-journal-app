@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
+import WelcomeScreen from "../screens/WelcomeScreen";
+import React from "react";
 
 
 
@@ -20,9 +22,10 @@ const AppNavigator = () => (
 );
 
 //Pages to be redirected for authentication
-const AuthNavigator = () => (
+const AuthNavigator: React.FC = () => (
     <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="Welcome">
+            <Stack.Screen name="Welcome" component={WelcomeScreen as React.FC} options={{headerShown:false}}/>
             <Stack.Screen name="Register" component={RegisterScreen} />
             <Stack.Screen name="Login" component={LoginScreen}/>
             
