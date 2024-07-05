@@ -4,9 +4,10 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
 import { RouteProp } from '@react-navigation/native';
 import {Button, YStack,SizableText} from 'tamagui'
+import { StackNavigationProp } from '@react-navigation/stack';
 
 
-type WelcomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Welcome'>;
+type WelcomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Welcome'>;
 type  WelcomeScreenRouteProp = RouteProp<RootStackParamList, 'Welcome'>;
 
 type Props = {
