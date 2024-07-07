@@ -9,7 +9,7 @@ import {sendAlert} from '../utils/ui';
 
 
 type RegisterScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Register'>;
-type RegisterScreenRouteProp = RouteProp<RootStackParamList,'Welcome'>;
+type RegisterScreenRouteProp = RouteProp<RootStackParamList,'Register'>;
 
 type Props = {
     navigation: RegisterScreenNavigationProp;
@@ -32,7 +32,8 @@ const RegisterScreen : React.FC<Props> = ({navigation}) => {
             const response = await api.post('/auth/register', { username, email, password });
             navigation.navigate('Login');
         } catch (error: any) {
-            sendAlert('❌ Something went wrong',error.response.data.error);
+            const errorMessage = error.response.data.error|| 'Kindly confirm your details again'
+            sendAlert('❌ Something went wrong',errorMessage);
         }
     };
 
