@@ -7,10 +7,12 @@ import { Adapt, Dialog, Fieldset, Input, Label, Sheet, Spinner } from 'tamagui'
 import { SizableText } from 'tamagui'
 import { Button, ListItem, Separator, YGroup } from 'tamagui'
 import { Form, View, YStack } from 'tamagui'
+import CustomModal from '../components/AlertModal'
+import InputModal from '../components/InputModal'
 
 const LoginScreen = () => {
     const [status, setStatus] = useState<'off' | 'submitting' | 'submitted'>('off')
-
+    const [modalVisible, setModalVisible] = useState(false);
     useEffect(() => {
         if (status === 'submitting') {
             const timer = setTimeout(() => setStatus('off'), 2000)
@@ -48,79 +50,10 @@ const LoginScreen = () => {
                       </Button>
                   </Form.Trigger>
               </Form>
-              <Dialog modal>
-                  <Dialog.Trigger asChild>
-                      <Button variant="outlined" size="$3" borderWidth={0} width={140}>
-                          forgot password?
-                      </Button>
-                  </Dialog.Trigger>
-                  <Adapt when="sm" platform="touch">
-                      <Sheet animation="medium" zIndex={200000} modal dismissOnSnapToBottom>
-                          <Sheet.Frame padding="$4" gap="$4">
-                              <Adapt.Contents />
-                          </Sheet.Frame>
-                          <Sheet.Overlay
-                              animation="lazy"
-                              enterStyle={{ opacity: 0 }}
-                              exitStyle={{ opacity: 0 }}
-                          />
-                      </Sheet>
-                  </Adapt>
-                  <Dialog.Portal >
-                      <Dialog.Overlay
-                          key="overlay"
-                          animation="slow"
-                          opacity={0.5}
-                          enterStyle={{ opacity: 0 }}
-                          exitStyle={{ opacity: 0 }}
-                      />
-                      <Dialog.Content
-                          bordered
-                          elevate
-                          key="content"
-                          animateOnly={['transform', 'opacity']}
-                          animation={[
-                              'quicker',
-                              {
-                                  opacity: {
-                                      overshootClamping: true,
-                                  },
-                              },
-                          ]}
-                          enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
-                          exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
-                          gap="$4"
-                      >
-                          <Dialog.Title>Forgot Password?</Dialog.Title>
-                          <Dialog.Description>
-                              Type in your email address and we'll send you reset link with instructions
-                              to your email right away.
-                          </Dialog.Description>
-                          <Fieldset gap="$4" horizontal>
-                              <Label justifyContent="flex-end" htmlFor="name">
-                                  Email
-                              </Label>
-                              <Input flex={1} id="email" />
-                          </Fieldset>
-                          <XStack alignSelf="flex-end" gap="$4">
-
-                              <Dialog.Close displayWhenAdapted asChild>
-                                  <Button theme="active" aria-label="Close">
-                                      SEND
-                                  </Button>
-                              </Dialog.Close>
-                          </XStack>
-                          <Unspaced>
-
-                              <Dialog.Close>
-                                  <Button theme="active" aria-label="Close">
-                                      Close
-                                  </Button>
-                              </Dialog.Close>
-                          </Unspaced>
-                      </Dialog.Content>
-                  </Dialog.Portal>
-              </Dialog>
+              <Button variant="outlined" size="$3" borderWidth={0} width={150} onPress={() => setModalVisible(true)}>
+                  <SizableText size="$4">forgot password?</SizableText>
+              </Button>
+              <InputModal  modalVisible={modalVisible} setModalVisible={setModalVisible} />
           </YStack>
       </View>
 
