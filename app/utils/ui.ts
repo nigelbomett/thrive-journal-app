@@ -6,3 +6,15 @@ export const sendAlert = (title: string,message:string) => {
         {text: 'OK'},
     ]);
 };
+
+
+export const formatDateTime = (dateTimeString: string): string => {
+    const dateObject = new Date(dateTimeString);
+    return dateObject.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true, });
+};

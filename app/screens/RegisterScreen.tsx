@@ -32,7 +32,13 @@ const RegisterScreen : React.FC<Props> = ({navigation}) => {
             const response = await api.post('/auth/register', { username, email, password });
             navigation.navigate('Login');
         } catch (error: any) {
-            const errorMessage = error.response.data.error|| 'Kindly confirm your details again'
+            let errorMessage;
+            if (error.response?.data?.error) {
+                errorMessage = error.response.data.error
+            } else {
+                errorMessage = error.message;
+            }
+            //const errorMessage = error.response.data.error|| 'Kindly confirm your details again'
             sendAlert('❌ Something went wrong',errorMessage);
         }
     };

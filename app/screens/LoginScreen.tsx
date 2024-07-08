@@ -37,12 +37,20 @@ const LoginScreen:React.FC<Props> = ({navigation}) => {
             console.log(response.data.token);
             //save JwT token to storage and redirect to home page
             await AsyncStorage.setItem('token',response.data.token);
-            navigation.reset({
+            /* navigation.reset({
                 index: 0,
                 routes: [{ name: 'Home' }],
-            });
+            }); */
+            navigation.navigate('HomeTab');
         } catch (error: any) {
-            const errorMessage = error.response.data || 'Kindly confirm your details again'
+            let errorMessage;
+            if (error.response?.data){
+                errorMessage = error.response.data
+            }else{
+                errorMessage = error.message;
+            }
+            //const errorMessage = error.response.data || 'Kindly confirm your details again'
+             
             sendAlert('❌ Something went wrong', errorMessage);
         }
     };
