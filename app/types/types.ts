@@ -2,7 +2,7 @@ export type RootStackParamList = {
     Welcome:undefined;
     Login:undefined;
     Register:undefined;
-    Home:undefined;
+    HomeTab:undefined;
 };
 
 export type JournalEntry ={

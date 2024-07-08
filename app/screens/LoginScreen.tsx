@@ -34,7 +34,6 @@ const LoginScreen:React.FC<Props> = ({navigation}) => {
     const handleLogin = async () => {
         try {
             const response = await api.post('/auth/login', {email,password});
-            console.log(response.data.token);
             //save JwT token to storage and redirect to home page
             await AsyncStorage.setItem('token',response.data.token);
             /* navigation.reset({
