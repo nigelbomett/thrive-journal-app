@@ -78,7 +78,7 @@ const HomeScreen:React.FC<HomeScreenProps> = ({navigation}) => {
 
      <View style={styles.entriesList}>
       <JournalEntryList entries={entries} onEdit={(id) => navigation.navigate('Journal Entry', { entryId: id })} onDelete={deleteEntry} />
-            <Button onPress={() => navigation.navigate('Journal Entry')} marginTop="$5" backgroundColor={'orange'}>Add New Entry</Button>
+            <Button onPress={() => navigation.navigate('Journal Entry')} marginTop="$2" backgroundColor={'orange'}><SizableText size="$6">Add New Entry</SizableText></Button>
       </View>
       )}
     </View>
