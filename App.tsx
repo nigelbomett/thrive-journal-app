@@ -3,7 +3,7 @@ import tamaguiConfig from './app/tamagui.config';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
-import { AppNavigator, AuthNavigator } from './app/navigation/AppNavigator';
+import { RootNavigator } from './app/navigation/AppNavigator';
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -35,7 +35,7 @@ export default function App() {
   }
 
   //redirect to either home page or login/register based on authentication
-  if(isAuthenticated){
+  /* if(isAuthenticated){
     return (
       <TamaguiProvider config={tamaguiConfig}><AppNavigator/></TamaguiProvider>
     );
@@ -43,5 +43,6 @@ export default function App() {
     return (
       <TamaguiProvider config={tamaguiConfig}><AuthNavigator /></TamaguiProvider>
     );
-  }
+  } */
+  return (<TamaguiProvider config={tamaguiConfig}><RootNavigator /></TamaguiProvider>);
 }

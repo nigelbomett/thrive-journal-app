@@ -10,6 +10,7 @@ import JournalEntryScreen from "../screens/JournalEntryScreen";
 import SummaryScreen from "../screens/SummaryScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { Button, SizableText, Text, XStack } from "tamagui";
 
 
 type IconName = 'home' | 'home-outline' | 'settings' | 'settings-outline' | 'stats-chart' | 'stats-chart-outline' | 'person-circle' | 'person-circle-outline';
@@ -18,14 +19,25 @@ const Tab = createBottomTabNavigator();
 
 const HomeStack = () => (
     <Stack.Navigator>
-        <Stack.Screen name="Journal" component={HomeScreen}/>
-        <Stack.Screen name="JournalEntry" component={JournalEntryScreen}/>
+        <Stack.Screen name="Journal" component={HomeScreen}
+            options={({navigation}) => ({
+                headerRight: () => (
+                    <XStack
+                        gap="$5"
+                        padding="$2"
+                    >
+                        <SizableText size="$8" ><Ionicons name="person-outline" size={24} color="black" /></SizableText>
+                        <SizableText size="$8"> 1 <Ionicons name="flame" size={24} color="red"/></SizableText>
+                    </XStack>
+                )
+            })}
+        />
+        <Stack.Screen name="Journal Entry" component={JournalEntryScreen as React.FC}/>
     </Stack.Navigator>
 );
 
 //pages to be viewed once authorized
 const AppNavigator = () => (
-    <NavigationContainer>
         <Tab.Navigator
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
@@ -51,23 +63,33 @@ const AppNavigator = () => (
             })}
         
         >
-            <Tab.Screen name="Home" component={HomeStack}/>
+        <Tab.Screen name="Home" component={HomeStack} options={{ headerShown: false }}/>
             <Tab.Screen name="Summary" component={SummaryScreen}/>
             <Tab.Screen name="Settings" component={SettingsScreen}/>
         </Tab.Navigator>
-    </NavigationContainer>
 );
+
+
 
 //Pages to be redirected for authentication
 const AuthNavigator: React.FC = () => (
-    <NavigationContainer>
+    
         <Stack.Navigator initialRouteName="Welcome">
             <Stack.Screen name="Welcome" component={WelcomeScreen as React.FC} options={{headerShown:false}}/>
             <Stack.Screen name="Register" component={RegisterScreen as React.FC} />
             <Stack.Screen name="Login" component={LoginScreen as React.FC}/>
-            
+            <Stack.Screen name="HomeTab" component={AppNavigator} options={{headerShown:false}}/>
+        </Stack.Navigator>
+        
+    
+);
+
+const RootNavigator = () => (
+    <NavigationContainer>
+        <Stack.Navigator>
+            <Stack.Screen name="Main" component={AuthNavigator} options={{headerShown:false}}/>
         </Stack.Navigator>
     </NavigationContainer>
 );
 
-export {AppNavigator,AuthNavigator};
+export {RootNavigator};
