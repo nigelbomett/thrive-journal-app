@@ -4,6 +4,7 @@ import api from '../utils/api';
 import { sendAlert } from '../utils/ui';
 import { Button, Card, H2, Image, ListItem, Paragraph, ScrollView, Separator, SizableText, XStack, YGroup } from 'tamagui';
 import { FontAwesome } from '@expo/vector-icons';
+import withAuth from '../components/Auth';
 
 const SettingsScreen = () => {
   const [username, setUsername] = useState('');
@@ -106,7 +107,7 @@ const SettingsScreen = () => {
   )
 }
 
-export default SettingsScreen
+export default withAuth(SettingsScreen)
 
 const styles = StyleSheet.create({
   cardContainer: {

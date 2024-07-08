@@ -7,6 +7,7 @@ import DatePicker from '@react-native-community/datetimepicker'
 import { JournalEntry } from '../types/types';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import JournalEntryList from '../components/JournalEntryList';
+import withAuth from '../components/Auth';
 
 
 interface SummaryScreenProps {
@@ -91,7 +92,7 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({ navigation }) => {
   )
 }
 
-export default SummaryScreen
+export default withAuth(SummaryScreen)
 
 const styles = StyleSheet.create({
   container: {

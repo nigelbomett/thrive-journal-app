@@ -6,6 +6,7 @@ import JournalEntryList from '../components/JournalEntryList';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import { Button, Card, Group, H2, Image, Paragraph, ScrollView, Separator, SizableText, View, XStack, YStack } from 'tamagui';
+import withAuth from '../components/Auth';
 interface HomeScreenProps{
   navigation: NavigationProp<ParamListBase>
 }
@@ -85,7 +86,7 @@ const HomeScreen:React.FC<HomeScreenProps> = ({navigation}) => {
   )
 }
 
-export default HomeScreen
+export default withAuth(HomeScreen);
 
 const styles = StyleSheet.create({
   cardContainer: {
