@@ -30,9 +30,10 @@ const JournalEntryList: React.FC<JournalEntryListProps> = ({entries,onEdit,onDel
         item.id.toString()}
         renderItem={({item}) => (
           <View>
-          <Card elevate size="$5" width={400} marginTop="$4">
+          <Card elevate size="$5" width={355} marginTop="$4" onPress={() => onEdit(item.id)} borderRadius={0}>
           <YStack width="100%" marginHorizontal={15} padding="$5">
-              <Paragraph fontWeight="800">{formatDateTime(item.date)}</Paragraph>
+            
+                <Paragraph fontWeight="800">{formatDateTime(item.date)}</Paragraph>
               <Paragraph fontWeight="800">{item.title}</Paragraph>
             <Separator marginVertical={15} />
             <XStack height={20} alignItems="center">

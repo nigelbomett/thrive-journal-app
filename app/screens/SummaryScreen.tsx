@@ -30,8 +30,8 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({ navigation }) => {
       setSummary(response.data);
     } catch (error: any) {
       let errorMessage;
-      if (error.response?.data) {
-        errorMessage = error.response.data
+      if (error.response?.data?.error) {
+        errorMessage = error.response.data.error
       } else {
         errorMessage = error.message;
       }
@@ -46,11 +46,11 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({ navigation }) => {
     } catch (error: any) {
       let errorMessage;
       if (error.response?.data) {
-        errorMessage = error.response.data
+        errorMessage = error.response.data.error
       } else {
         errorMessage = error.message;
       }
-      sendAlert('❌ Something went wrong', errorMessage);
+      sendAlert('❌ Something went wrong', error.message);
     }
   }
 

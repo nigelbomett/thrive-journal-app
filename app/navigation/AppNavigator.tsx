@@ -74,7 +74,7 @@ const AppNavigator = () => (
 //Pages to be redirected for authentication
 const AuthNavigator: React.FC = () => (
     
-        <Stack.Navigator initialRouteName="Welcome">
+        <Stack.Navigator>
             <Stack.Screen name="Welcome" component={WelcomeScreen as React.FC} options={{headerShown:false}}/>
             <Stack.Screen name="Register" component={RegisterScreen as React.FC} />
             <Stack.Screen name="Login" component={LoginScreen as React.FC}/>

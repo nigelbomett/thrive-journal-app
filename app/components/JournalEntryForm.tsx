@@ -2,7 +2,7 @@ import { FlatList, ListRenderItem, StyleSheet, Text, TextInput, View } from 'rea
 import React, { useEffect, useState } from 'react'
 import api from '../utils/api';
 import { sendAlert } from '../utils/ui';
-import { Button, Card, ScrollView, SizableText } from 'tamagui';
+import { Button, SizableText, XGroup } from 'tamagui';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 interface EntryFormProps {
@@ -39,11 +39,11 @@ const JournalEntryForm: React.FC<EntryFormProps> = ({entryId, onSave}) => {
     };
 
     useEffect(() => {
-        validateEntry();
+        //validateEntry();
         if(entryId){
             fetchEntry();
         }
-    }, [entryId, title,category,content]);
+    }, [entryId]);
 
     const fetchEntry = async () => {
         try {
@@ -68,10 +68,11 @@ const JournalEntryForm: React.FC<EntryFormProps> = ({entryId, onSave}) => {
         try {
             const payload = {title,content,category};
             if(entryId){
-                await api.put(`/entry/${entryId}`);
+                await api.put(`/entry/${entryId}`,payload);
             }else{
                 await api.post('/entry',payload);
             }
+            fetchEntry();
             onSave();
         } catch (error: any) {
             let errorMessage;
@@ -82,6 +83,27 @@ const JournalEntryForm: React.FC<EntryFormProps> = ({entryId, onSave}) => {
             }
 
             sendAlert('❌ Something went wrong', errorMessage);
+        }
+    }
+
+    const deleteEntry = async (id: number) => {
+        try {
+            await api.delete(`/entry/${id}`);
+            onSave();
+        } catch (error: any) {
+            let errorMessage;
+            if (error.response?.data) {
+                errorMessage = error.response.data.error
+            } else {
+                errorMessage = error.message;
+            }
+            sendAlert('❌ Something went wrong', errorMessage);
+        }
+    }
+
+    const handleDelete = () => {
+        if(entryId){
+            deleteEntry(entryId);
         }
     }
     type ListItem = { key: string };
@@ -147,11 +169,18 @@ const JournalEntryForm: React.FC<EntryFormProps> = ({entryId, onSave}) => {
                 contentContainerStyle={styles.flatListContent}
             />
 
-        <View>
-                <Button onPress={handleSave} marginTop="$5" backgroundColor={'orange'} disabled={isButtonDisabled} opacity={opacity}>
-            <SizableText size="$4">Save</SizableText>
-        </Button>
-        </View>
+            <XGroup size="$3" $gtSm={{ size: '$5' }} gap="$5">
+                <XGroup.Item>
+                    <Button onPress={handleDelete} marginTop="$2" backgroundColor={'red'} width="45%">
+                        <SizableText size="$4">Delete</SizableText>
+                    </Button>                   
+                </XGroup.Item>
+                <XGroup.Item>
+                    <Button onPress={handleSave} marginTop="$2" backgroundColor={'orange'} width="45%">
+                        <SizableText size="$4">Save</SizableText>
+                    </Button>
+                </XGroup.Item>
+            </XGroup>
         </View>
   )
 }
@@ -164,7 +193,7 @@ const styles = StyleSheet.create({
        
     },
     dropdown: {
-        borderColor: '#ccc',
+        borderColor: '#ccc'
     },
     container: {
         padding:20,

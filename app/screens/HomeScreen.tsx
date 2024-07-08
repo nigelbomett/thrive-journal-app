@@ -16,7 +16,7 @@ const HomeScreen:React.FC<HomeScreenProps> = ({navigation}) => {
 
   useEffect(() => {
     fetchEntries();
-  },[]);
+  },[entries]);
   
   const fetchEntries = async () => {
     try {
@@ -25,7 +25,7 @@ const HomeScreen:React.FC<HomeScreenProps> = ({navigation}) => {
     } catch (error: any) {
       let errorMessage;
       if (error.response?.data) {
-        errorMessage = error.response.data
+        errorMessage = error.response.data.error
       } else {
         errorMessage = error.message;
       }
@@ -40,7 +40,7 @@ const HomeScreen:React.FC<HomeScreenProps> = ({navigation}) => {
     } catch (error :any) {
       let errorMessage;
       if (error.response?.data) {
-        errorMessage = error.response.data
+        errorMessage = error.response.data.error
       } else {
         errorMessage = error.message;
       }
@@ -75,7 +75,7 @@ const HomeScreen:React.FC<HomeScreenProps> = ({navigation}) => {
         </Card.Background>
       </Card> ) : (
 
-     <View>
+     <View style={styles.entriesList}>
       <JournalEntryList entries={entries} onEdit={(id) => navigation.navigate('Journal Entry', { entryId: id })} onDelete={deleteEntry} />
             <Button onPress={() => navigation.navigate('Journal Entry')} marginTop="$5" backgroundColor={'orange'}>Add New Entry</Button>
       </View>
@@ -99,6 +99,6 @@ const styles = StyleSheet.create({
     flex:1
   },
   entriesList:{
-
+    padding:10
   }
 })
