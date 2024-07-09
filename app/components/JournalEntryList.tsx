@@ -1,7 +1,6 @@
-import { FlatList, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Button, Card, ListItem, Paragraph, Separator, SizableText, View, XStack, YGroup, YStack } from "tamagui";
-import { ChevronRight, Cloud, Moon, Star, Sun } from '@tamagui/lucide-icons'
-import { Ionicons } from "@expo/vector-icons";
+import { FlatList, StyleSheet } from "react-native";
+import { Button, Card, Paragraph, Separator, SizableText, View, XStack,YStack } from "tamagui";
+import { Ionicons,FontAwesome } from "@expo/vector-icons";
 import { formatDateTime } from "../utils/ui";
 
 
@@ -21,7 +20,8 @@ interface JournalEntryListProps {
     onDelete: (id:number) => void;
 }
 
-type IconName = 'briefcase' | 'barcode' | 'airplane';
+type AwesomeIcon = 'user-secret' | 'plane' | 'briefcase';
+
 const JournalEntryList: React.FC<JournalEntryListProps> = ({entries,onEdit,onDelete}) => {
     return (      
         <FlatList
@@ -37,7 +37,7 @@ const JournalEntryList: React.FC<JournalEntryListProps> = ({entries,onEdit,onDel
               <Paragraph fontWeight="800">{item.title}</Paragraph>
             <Separator marginVertical={15} />
             <XStack height={20} alignItems="center">
-              <Ionicons name={item.category as IconName} size={20} color={'#E67E33'} />
+              <FontAwesome name={item.category as AwesomeIcon} size={20} color={'#E67E33'} />
               <Separator alignSelf="stretch" vertical marginHorizontal={15} />
               <SizableText width={180} numberOfLines={1} ellipsizeMode='tail'>{item.content}</SizableText>
             </XStack>

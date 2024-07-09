@@ -21,8 +21,8 @@ const JournalEntryForm: React.FC<EntryFormProps> = ({entryId, onSave}) => {
     const [open, setOpen] = useState(false);
     const [categories, setCategories] = useState([
         { label: 'Work', value: 'briefcase' },
-        { label: 'Personal', value: 'barcode' },
-        { label: 'Travel', value: 'airplane' },
+        { label: 'Personal', value: 'user-secret' },
+        { label: 'Travel', value: 'plane' },
     ]);
 
     const validateEntry = () => {
