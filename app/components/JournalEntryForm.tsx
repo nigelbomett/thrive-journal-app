@@ -72,7 +72,7 @@ const JournalEntryForm: React.FC<EntryFormProps> = ({entryId, onSave}) => {
             }else{
                 await api.post('/entry',payload);
             }
-            fetchEntry();
+
             onSave();
         } catch (error: any) {
             let errorMessage;
