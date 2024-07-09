@@ -29,7 +29,7 @@ const RegisterScreen : React.FC<Props> = ({navigation}) => {
 
     const handleRegister = async () => {             
         try {
-            const response = await api.post('/auth/register', { username, email, password });
+            const response = await api.post('/user', { username, email, password });
             navigation.navigate('Login');
         } catch (error: any) {
             let errorMessage;
