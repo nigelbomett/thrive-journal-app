@@ -2,7 +2,7 @@
 
 A simple journaling application built with React Native, TypeScript, and Expo. This application allows create journal entries, view and categorize entries, track progress with streaks.
 
-<img src="assets/phone_image.jpg" alt="Screenshot" height="350" width="300"/>
+<img src="assets/phone_image.jpg" alt="Screenshot" height="350" width="200"/>
 
 ## Overview
 
