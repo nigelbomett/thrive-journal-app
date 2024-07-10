@@ -8,7 +8,7 @@ import { JournalEntry } from '../types/types';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import JournalEntryList from '../components/JournalEntryList';
 import withAuth from '../components/Auth';
-
+import { AntDesign } from "@expo/vector-icons";
 
 interface SummaryScreenProps {
   navigation: NavigationProp<ParamListBase>
@@ -57,7 +57,10 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Button onPress={() => setShowDatePicker(true)} backgroundColor={'#E67E33'}><SizableText size="$7">Select Date</SizableText></Button>
+      <Button onPress={() => setShowDatePicker(true)} backgroundColor={'white'}>
+        <AntDesign name={'calendar'} size={20} color={'#E67E33'} />
+        <SizableText size="$7">{date.toDateString()}</SizableText>
+      </Button>
       {showDatePicker && (
         <DatePicker
           value={date}
@@ -77,7 +80,6 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({ navigation }) => {
       </View>
       <Button onPress={fetchSummary} backgroundColor={'#E1D7CB'}><SizableText size="$5">Fetch Summary</SizableText></Button>
       <View>
-      <SizableText size="$4" paddingTop="$3">Selected date: {date.toDateString()}</SizableText> 
       <SizableText size="$4" paddingTop="$3">Selected period: {period}</SizableText>
       </View>
       {summary && (
