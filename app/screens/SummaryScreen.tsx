@@ -1,14 +1,16 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import api from '../utils/api';
 import { formatDateTime, sendAlert } from '../utils/ui';
-import { Button, ScrollView, SizableText } from 'tamagui';
+import { Button, RadioGroup, SizableText } from 'tamagui';
 import DatePicker from '@react-native-community/datetimepicker'
 import { JournalEntry } from '../types/types';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import JournalEntryList from '../components/JournalEntryList';
 import withAuth from '../components/Auth';
 import { AntDesign } from "@expo/vector-icons";
+import { XStack } from 'tamagui';
+
 
 interface SummaryScreenProps {
   navigation: NavigationProp<ParamListBase>
@@ -73,14 +75,30 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({ navigation }) => {
           }}
         />
       )}
-      <View style={styles.periodButtons}>
-        <Button onPress={() => setPeriod('daily')} backgroundColor={'#E1D7CB'} width="30%"><SizableText size="$4">Daily</SizableText></Button>
-        <Button onPress={() => setPeriod('weekly')} backgroundColor={'#E1D7CB'} width="30%"><SizableText size="$4">Weekly</SizableText></Button>
-        <Button onPress={() => setPeriod('monthly')} backgroundColor={'#E1D7CB'} width="30%"><SizableText size="$4">Monthly</SizableText></Button>
-      </View>
+      <RadioGroup aria-labelledby="Select one item" defaultValue="daily" name="form" marginTop="$4" marginBottom="$4">
+        <XStack   gap="$8" alignItems='center'>
+          <XStack gap="$2" alignItems='center'>
+            <RadioGroup.Item value="daily" size="$5" onPress={() => setPeriod('daily')}>
+            <RadioGroup.Indicator />
+          </RadioGroup.Item>
+           <SizableText size="$5">Daily</SizableText>
+          </XStack>
+          <XStack gap="$3" alignItems='center'>
+            <RadioGroup.Item value="weekly" size="$4" onPress={() => setPeriod('weekly')}>
+              <RadioGroup.Indicator />
+            </RadioGroup.Item>
+            <SizableText size="$5">Weekly</SizableText>
+          </XStack>
+          <XStack gap="$3" alignItems='center'>
+            <RadioGroup.Item value="monthly" size="$4" onPress={() => setPeriod('monthly')}>
+              <RadioGroup.Indicator />
+            </RadioGroup.Item>
+            <SizableText size="$5">Monthly</SizableText>
+          </XStack>
+        </XStack>
+      </RadioGroup>
       <Button onPress={fetchSummary} backgroundColor={'#E1D7CB'}><SizableText size="$5">Fetch Summary</SizableText></Button>
       <View>
-      <SizableText size="$4" paddingTop="$3">Selected period: {period}</SizableText>
       </View>
       {summary && (
           <SizableText size="$8" paddingTop="$3">Total Entries: {summary.totalEntries}</SizableText>
