@@ -10,16 +10,18 @@ import JournalEntryScreen from "../screens/JournalEntryScreen";
 import SummaryScreen from "../screens/SummaryScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Button, SizableText, Text, XStack } from "tamagui";
+import {SizableText, XStack } from "tamagui";
 
 
 type IconName = 'home' | 'home-outline' | 'settings' | 'settings-outline' | 'stats-chart' | 'stats-chart-outline' | 'person-circle' | 'person-circle-outline';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+
+//The home tab on the home page
 const HomeStack = () => (
     <Stack.Navigator>
-        <Stack.Screen name="Journal" component={HomeScreen}
+        <Stack.Screen name="Journal" component={HomeScreen as React.FC}
             options={({navigation}) => ({
                 headerRight: () => (
                     <XStack
@@ -36,7 +38,7 @@ const HomeStack = () => (
     </Stack.Navigator>
 );
 
-//pages to be viewed once authorized
+//tabs on the home page
 const AppNavigator = () => (
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -64,14 +66,14 @@ const AppNavigator = () => (
         
         >
         <Tab.Screen name="Home" component={HomeStack} options={{ headerShown: false }}/>
-            <Tab.Screen name="Summary" component={SummaryScreen}/>
-            <Tab.Screen name="Settings" component={SettingsScreen}/>
+        <Tab.Screen name="Summary" component={SummaryScreen as React.FC}/>
+        <Tab.Screen name="Settings" component={SettingsScreen as React.FC}/>
         </Tab.Navigator>
 );
 
 
 
-//Pages to be redirected for authentication
+//Combining all screens including the authorization pages
 const AuthNavigator: React.FC = () => (
     
         <Stack.Navigator>

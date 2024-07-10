@@ -1,6 +1,5 @@
 import { TamaguiProvider } from 'tamagui';
 import tamaguiConfig from './app/tamagui.config';
-import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font';
 import { RootNavigator } from './app/navigation/AppNavigator';
@@ -13,6 +12,8 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  //load fonts for tamagui ui-library
   const [loaded] = useFonts({
     Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
     InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
@@ -34,15 +35,5 @@ export default function App() {
     return null;
   }
 
-  //redirect to either home page or login/register based on authentication
-  /* if(isAuthenticated){
-    return (
-      <TamaguiProvider config={tamaguiConfig}><AppNavigator/></TamaguiProvider>
-    );
-  }else{
-    return (
-      <TamaguiProvider config={tamaguiConfig}><AuthNavigator /></TamaguiProvider>
-    );
-  } */
   return (<TamaguiProvider config={tamaguiConfig}><RootNavigator /></TamaguiProvider>);
 }
