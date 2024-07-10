@@ -3,21 +3,22 @@ import React, { useEffect, useState } from 'react'
 import api from '../utils/api';
 import { sendAlert } from '../utils/ui';
 import { Button, SizableText, XGroup } from 'tamagui';
-import DropDownPicker from 'react-native-dropdown-picker';
+import { Dropdown } from 'react-native-element-dropdown';
 import { AntDesign } from "@expo/vector-icons";
+import DatePicker from '@react-native-community/datetimepicker'
 
 interface EntryFormProps {
     entryId?: number;
     onSave: () => void;
 }
 
-type AntIcon = 'delete' | 'arrowright';
+type AntIcon = 'delete' | 'arrowright' |'calendar';
 
 const JournalEntryForm: React.FC<EntryFormProps> = ({entryId, onSave}) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [category, setCategory] = useState('');
-    const [date, setDate] = useState('');
+    const [date, setDate] = useState(new Date());
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [opacity, setOpacity] = useState(0.4)
     const [open, setOpen] = useState(false);
@@ -26,8 +27,8 @@ const JournalEntryForm: React.FC<EntryFormProps> = ({entryId, onSave}) => {
         { label: 'Personal', value: 'user-secret' },
         { label: 'Travel', value: 'plane' },
     ]);
-
-    
+    const [showDatePicker, setShowDatePicker] = useState(false);
+    const [isFocus, setIsFocus] = useState(false);
 
     const validateEntry = () => {
         if (title &&
@@ -70,7 +71,7 @@ const JournalEntryForm: React.FC<EntryFormProps> = ({entryId, onSave}) => {
 
     const handleSave = async () => {
         try {
-            const payload = {title,content,category};
+            const payload = {title,content,category,date};
             if(entryId){
                 await api.put(`/entry/${entryId}`,payload);
             }else{
@@ -120,6 +121,7 @@ const JournalEntryForm: React.FC<EntryFormProps> = ({entryId, onSave}) => {
                         value={title}
                         onChangeText={setTitle}
                         style={styles.input}
+                        
                     />
                 );
             case 'content':
@@ -134,25 +136,58 @@ const JournalEntryForm: React.FC<EntryFormProps> = ({entryId, onSave}) => {
                 );
             case 'category':
                 return (
-                    <DropDownPicker
-                        open={open}
-                        value={category}
-                        items={categories}
-                        setOpen={setOpen}
-                        setValue={setCategory}
-                        setItems={setCategories}
-                        style={styles.dropdown}
-                        containerStyle={{ height: 50, marginBottom: 10 }}
-                    />
+                   <Dropdown
+                        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={categories}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder={!isFocus ? 'Select item' : '...'}
+          searchPlaceholder="Search..."
+          value={category}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setCategory(item.value);
+            setIsFocus(false);
+          }}
+          renderLeftIcon={() => (
+            <AntDesign
+              style={styles.icon}
+              color={isFocus ? 'blue' : 'black'}
+              name="Safety"
+              size={20}
+            />
+          )}
+        />
                 );
             case 'date':
                 return (
-                    <TextInput
-                        placeholder="Date"
-                        value={date}
-                        onChangeText={setDate}
-                        style={styles.input}
-                    />
+                    <View>
+                        <Button onPress={() => setShowDatePicker(true)} marginTop="$4">
+                            <AntDesign name={'calendar' as AntIcon} size={20} color={'#E67E33'} />
+                            <SizableText size="$4">{date.toDateString()}</SizableText>
+                            </Button>
+                    {
+                    showDatePicker && (
+                        <DatePicker
+                            value={date}
+                            mode='date'
+                            display='default'
+                            onChange={(event, selectedDate) => {
+                                const currentDate = selectedDate || date;
+                                setShowDatePicker(false);
+                                setDate(currentDate);
+                            }}
+                        />
+                    )
+                }
+                    </View>
                 );
             default:
                 return null;
@@ -166,7 +201,8 @@ const JournalEntryForm: React.FC<EntryFormProps> = ({entryId, onSave}) => {
                 data={[
                     { key: 'title' },                   
                     { key: 'category' },
-                    { key: 'content' },
+                    { key:  'date' },
+                    { key: 'content' }
                 ]}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.key}
@@ -196,9 +232,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
        
     },
-    dropdown: {
-        borderColor: '#ccc'
-    },
     container: {
         padding:20,
         backgroundColor: '#fff',
@@ -217,6 +250,39 @@ const styles = StyleSheet.create({
     contentInput: {
         flex: 1, 
         paddingTop:10
+    },
+    dropdown: {
+        height: 50,
+        borderColor: 'gray',
+        borderWidth: 0.5,
+        borderRadius: 8,
+        paddingHorizontal: 8,
+    },
+    icon: {
+        marginRight: 5,
+    },
+    label: {
+        position: 'absolute',
+        backgroundColor: 'white',
+        left: 22,
+        top: 8,
+        zIndex: 999,
+        paddingHorizontal: 8,
+        fontSize: 14,
+    },
+    placeholderStyle: {
+        fontSize: 16,
+    },
+    selectedTextStyle: {
+        fontSize: 16,
+    },
+    iconStyle: {
+        width: 20,
+        height: 20,
+    },
+    inputSearchStyle: {
+        height: 40,
+        fontSize: 16,
     },
 })
 
