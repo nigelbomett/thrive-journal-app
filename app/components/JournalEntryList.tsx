@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet } from "react-native";
 import { Button, Card, Paragraph, Separator, SizableText, View, XStack,YStack } from "tamagui";
-import { Ionicons,FontAwesome } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { formatDateTime } from "../utils/ui";
 
 

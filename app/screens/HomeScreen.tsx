@@ -4,7 +4,7 @@ import api from '../utils/api';
 import {formatDateTime, sendAlert} from '../utils/ui';
 import JournalEntryList from '../components/JournalEntryList';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
-import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import { Entypo, FontAwesome } from '@expo/vector-icons';
 import { Button, Card, Group, H2, Image, Paragraph, ScrollView, Separator, SizableText, View, XStack, YStack } from 'tamagui';
 import withAuth from '../components/Auth';
 interface HomeScreenProps{
@@ -78,7 +78,10 @@ const HomeScreen:React.FC<HomeScreenProps> = ({navigation}) => {
 
      <View style={styles.entriesList}>
       <JournalEntryList entries={entries} onEdit={(id) => navigation.navigate('Journal Entry', { entryId: id })} onDelete={deleteEntry} />
-            <Button onPress={() => navigation.navigate('Journal Entry')} marginTop="$2" backgroundColor={'orange'}><SizableText size="$6">Add New Entry</SizableText></Button>
+            
+            <Button onPress={() => navigation.navigate('Journal Entry')} width="20%" alignSelf='flex-end' chromeless>
+              <Entypo name={'new-message'} size={40} color={'orange'} />
+              </Button>
       </View>
       )}
     </View>

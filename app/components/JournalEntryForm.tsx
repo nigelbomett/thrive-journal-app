@@ -4,12 +4,14 @@ import api from '../utils/api';
 import { sendAlert } from '../utils/ui';
 import { Button, SizableText, XGroup } from 'tamagui';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { AntDesign } from "@expo/vector-icons";
 
 interface EntryFormProps {
     entryId?: number;
     onSave: () => void;
 }
 
+type AntIcon = 'delete' | 'arrowright';
 
 const JournalEntryForm: React.FC<EntryFormProps> = ({entryId, onSave}) => {
     const [title, setTitle] = useState('');
@@ -24,6 +26,8 @@ const JournalEntryForm: React.FC<EntryFormProps> = ({entryId, onSave}) => {
         { label: 'Personal', value: 'user-secret' },
         { label: 'Travel', value: 'plane' },
     ]);
+
+    
 
     const validateEntry = () => {
         if (title &&
@@ -169,15 +173,15 @@ const JournalEntryForm: React.FC<EntryFormProps> = ({entryId, onSave}) => {
                 contentContainerStyle={styles.flatListContent}
             />
 
-            <XGroup size="$3" $gtSm={{ size: '$5' }} gap="$5">
-                <XGroup.Item>
-                    <Button onPress={handleDelete} marginTop="$2" backgroundColor={'red'} width="45%">
-                        <SizableText size="$4">Delete</SizableText>
-                    </Button>                   
+            <XGroup size="$4" $gtSm={{ size: '$5' }} gap="$15">
+                <XGroup.Item> 
+                    <Button width="30%" onPress={handleDelete} chromeless>
+                    <AntDesign name={'delete' as AntIcon} size={40} color={'red'}/>
+                    </Button>
                 </XGroup.Item>
                 <XGroup.Item>
-                    <Button onPress={handleSave} marginTop="$2" backgroundColor={'orange'} width="45%">
-                        <SizableText size="$4">Save</SizableText>
+                    <Button width="30%" onPress={handleSave} chromeless>
+                    <AntDesign name={'arrowright' as AntIcon} size={40} color={'#E67E33'} />
                     </Button>
                 </XGroup.Item>
             </XGroup>
